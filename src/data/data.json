@@ -1,0 +1,418 @@
+[
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-01-15T12:00:00Z",
+    "readingValue": 150,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-01-15T12:00:00Z",
+    "readingValue": 80,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-01-15T12:00:00Z",
+    "readingValue": 90,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-01-15T12:00:00Z",
+    "readingValue": 120,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-02-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-02-15T12:00:00Z",
+    "readingValue": 95,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-02-15T12:00:00Z",
+    "readingValue": 100,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-02-15T12:00:00Z",
+    "readingValue": 130,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-03-15T12:00:00Z",
+    "readingValue": 250,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-03-15T12:00:00Z",
+    "readingValue": 110,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-03-15T12:00:00Z",
+    "readingValue": 120,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-03-15T12:00:00Z",
+    "readingValue": 150,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-04-15T12:00:00Z",
+    "readingValue": 300,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-04-15T12:00:00Z",
+    "readingValue": 130,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-04-15T12:00:00Z",
+    "readingValue": 140,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-04-15T12:00:00Z",
+    "readingValue": 160,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-05-15T12:00:00Z",
+    "readingValue": 350,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-05-15T12:00:00Z",
+    "readingValue": 150,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-05-15T12:00:00Z",
+    "readingValue": 160,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-05-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-06-15T12:00:00Z",
+    "readingValue": 400,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-06-15T12:00:00Z",
+    "readingValue": 170,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-06-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-06-15T12:00:00Z",
+    "readingValue": 200,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-07-15T12:00:00Z",
+    "readingValue": 420,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-07-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-07-15T12:00:00Z",
+    "readingValue": 190,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-07-15T12:00:00Z",
+    "readingValue": 220,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 380,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 160,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 170,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 200,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-09-15T12:00:00Z",
+    "readingValue": 320,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-09-15T12:00:00Z",
+    "readingValue": 140,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-09-15T12:00:00Z",
+    "readingValue": 150,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-09-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-10-15T12:00:00Z",
+    "readingValue": 250,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-10-15T12:00:00Z",
+    "readingValue": 120,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-10-15T12:00:00Z",
+    "readingValue": 130,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-10-15T12:00:00Z",
+    "readingValue": 160,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-11-15T12:00:00Z",
+    "readingValue": 180,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-11-15T12:00:00Z",
+    "readingValue": 100,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-11-15T12:00:00Z",
+    "readingValue": 110,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-11-15T12:00:00Z",
+    "readingValue": 140,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-12-15T12:00:00Z",
+    "readingValue": 140,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-12-15T12:00:00Z",
+    "readingValue": 90,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "03",
+    "meterType": "Consumption",
+    "tenant": "Tenant 03",
+    "timestamp": "2023-12-15T12:00:00Z",
+    "readingValue": 100,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "04",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-12-15T12:00:00Z",
+    "readingValue": 130,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "05",
+    "meterType": "Production",
+    "tenant": null,
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 380,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "06",
+    "meterType": "Consumption",
+    "tenant": "Tenant 02",
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 160,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "01",
+    "meterType": "Consumption",
+    "tenant": "",
+    "timestamp": "2022-08-15T12:00:00Z",
+    "readingValue": 170,
+    "unit": "kWh"
+  },
+  {
+    "meterId": "02",
+    "meterType": "Consumption",
+    "tenant": "Tenant 04",
+    "timestamp": "2023-08-15T12:00:00Z",
+    "readingValue": 200,
+    "unit": "kWh"
+  }
+]
