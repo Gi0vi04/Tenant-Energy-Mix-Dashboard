@@ -1,5 +1,5 @@
 import type {
-  TenantConsumption,
+  TenantMixConsumption,
   GridOrigins,
   MeterReading,
   Tenant,
@@ -20,6 +20,7 @@ export async function fetchAggregatedConsumption(): Promise<PieChartData[]> {
         alert("Something went wrong. Please try again.");
         throw new Error("Unexpected error.");
       }
+
       resolve(result);
     }, 1000);
   });
@@ -31,24 +32,23 @@ export async function fetchTenantConsumption(
   return new Promise((resolve) => {
     setTimeout(() => {
       const data = rawData as MeterReading[]; // In a real context, this is where I would fetch the data.
-
       const monthlyProduction = getMonthlyProduction(data);
 
-      let result;
-
-      result = getTenantConsumption(tenant, data, monthlyProduction);
+      const result = getTenantConsumption(tenant, data, monthlyProduction);
 
       if (!result) {
         alert("Something went wrong. Please try again.");
         throw new Error("Unexpected error.");
       }
-      resolve(result!);
+
+      resolve(result);
     }, 1000);
   });
 }
 
 function getAggregatedConsumption(data: MeterReading[]): PieChartData[] {
   let result: PieChartData[] = [];
+
   TENANTS.forEach((tenant) => {
     const tenantConsumptionInYear = getTenantMonthlyConsumption(
       tenant,
@@ -107,10 +107,16 @@ function getYearlyTenantMixConsumption(
   tenant: Tenant,
   tenantMonthlyConsumption: number[],
   monthlyProduction: number[]
-): TenantConsumption {
-  let tenantConsumption: TenantConsumption = {
+): TenantMixConsumption {
+  let tenantConsumption: TenantMixConsumption = {
     pvEnergy: 0,
-    gridEnergy: getGridEnergyShares(0),
+    gridEnergy: {
+      nuclear: 0,
+      coal: 0,
+      gas: 0,
+      fossil: 0,
+      renewable: 0,
+    },
   };
 
   // If the tenant is not a participant I won't calculate the participantNumber cause I don't need it
@@ -128,17 +134,19 @@ function getYearlyTenantMixConsumption(
     if (tenant?.isParticipant) {
       const pvShareInMonth = productionInMonth / participantsNumber;
 
-      if (tenantConsumptionInMonth <= pvShareInMonth)
+      if (tenantConsumptionInMonth <= pvShareInMonth) {
         tenantConsumption.pvEnergy += tenantConsumptionInMonth;
-      else {
+      } else {
         tenantConsumption.pvEnergy += pvShareInMonth;
         tenantConsumption.gridEnergy = getGridEnergyShares(
-          tenantConsumptionInMonth - pvShareInMonth
+          tenantConsumptionInMonth - pvShareInMonth, // This is the remaining portion that this tenant need from the grid
+          tenantConsumption.gridEnergy
         );
       }
     } else {
       tenantConsumption.gridEnergy = getGridEnergyShares(
-        tenantConsumptionInMonth
+        tenantConsumptionInMonth, // If the tenant is not a participant, all consumption for this month must be taken from the grid
+        tenantConsumption.gridEnergy
       );
     }
   }
@@ -152,12 +160,17 @@ function getMonthlyProduction(data: MeterReading[]) {
     .map((element: MeterReading) => element.readingValue);
 }
 
-function getGridEnergyShares(energy: number): GridOrigins {
+function getGridEnergyShares(
+  energy: number,
+  currentGridConsumption: GridOrigins
+): GridOrigins {
   return {
-    nuclear: energy * GRID_ENERGY_SHARES.nuclear,
-    coal: energy * GRID_ENERGY_SHARES.coal,
-    gas: energy * GRID_ENERGY_SHARES.gas,
-    fossil: energy * GRID_ENERGY_SHARES.fossil,
-    renewable: energy * GRID_ENERGY_SHARES.renewable,
+    nuclear:
+      currentGridConsumption.nuclear + energy * GRID_ENERGY_SHARES.nuclear,
+    coal: currentGridConsumption.coal + energy * GRID_ENERGY_SHARES.coal,
+    gas: currentGridConsumption.gas + energy * GRID_ENERGY_SHARES.gas,
+    fossil: currentGridConsumption.fossil + energy * GRID_ENERGY_SHARES.fossil,
+    renewable:
+      currentGridConsumption.renewable + energy * GRID_ENERGY_SHARES.renewable,
   };
 }

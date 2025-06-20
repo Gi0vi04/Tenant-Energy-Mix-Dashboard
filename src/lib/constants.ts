@@ -1,11 +1,13 @@
 import type { GridOrigins, Tenant } from "../types";
 
+// In a real context, this data wouldn't be constant but fetched dynamically.
 export const TENANTS: Tenant[] = [
   { tenantName: "Tenant 02", isParticipant: true },
   { tenantName: "Tenant 03", isParticipant: true },
   { tenantName: "Tenant 04", isParticipant: false },
-]; // In a real context, this data wouldn't be constant but fetched dynamically.
+];
 
+// Percentages taken from the PDF containing the challenge instructions
 export const GRID_ENERGY_SHARES: GridOrigins = {
   nuclear: 0.429,
   coal: 0.406,

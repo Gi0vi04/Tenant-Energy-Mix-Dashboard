@@ -24,7 +24,7 @@ export interface GridOrigins {
   renewable: number;
 }
 
-export interface TenantConsumption {
+export interface TenantMixConsumption {
   pvEnergy: number;
   gridEnergy: GridOrigins;
 }

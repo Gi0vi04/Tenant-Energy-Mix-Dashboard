@@ -27,29 +27,30 @@ import {
 import type { PieChartData, Tenant } from "./types";
 import { PIE_CELL_COLORS, TENANTS } from "./lib/constants";
 import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
-import { roundToTwo } from "./lib/utils";
+import { CustomLabel, CustomTooltip } from "./lib/rechartsUtils";
 
 function App() {
   const menuOptions = [
     "Aggregated",
     ...TENANTS.map((element: Tenant) => element.tenantName),
   ]; // For this (small) example I've hardcoded these values
-  const [viewSelected, setViewSelected] = useState("Aggregated");
+  const [selectedView, setSelectedView] = useState("Aggregated");
 
-  const [data, setData] = useState<PieChartData[] | null>(null);
+  const [pieChartData, setPieChartData] = useState<PieChartData[] | null>(null);
   const [yearlyConsumption, setYearlyConsumption] = useState<number | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchData(option: string) {
-    setViewSelected(option);
+    setSelectedView(option);
 
     setIsLoading(true);
     try {
-      let res: PieChartData[] = [];
+      let result: PieChartData[] = [];
+
       if (option == "Aggregated") {
-        res = await fetchAggregatedConsumption();
+        result = await fetchAggregatedConsumption();
       } else {
         const tenant = TENANTS.find(
           (element: Tenant) => element.tenantName == option
@@ -59,17 +60,18 @@ function App() {
           throw new Error("This tenant does not exists.");
         }
 
-        res = await fetchTenantConsumption(tenant);
+        result = await fetchTenantConsumption(tenant);
       }
 
-      const yearlyConsumption = res.reduce(
+      const yearlyConsumption = result.reduce(
         (acc, currentValue: PieChartData) => acc + currentValue.value,
         0
       );
+
       setYearlyConsumption(Math.round(yearlyConsumption));
-      setData(res);
+      setPieChartData(result);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +109,7 @@ function App() {
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
               >
-                {viewSelected}
+                {selectedView}
               </MenuButton>
               <MenuList>
                 {menuOptions.map((option: string) => (
@@ -118,31 +120,32 @@ function App() {
               </MenuList>
             </Menu>
           </Flex>
-          <Flex justifyContent="center" p={4} pb={0}>
+          <Flex justifyContent="center" alignItems="center">
             {isLoading && <Spinner size="md" color="green.500" />}
-            {!isLoading && data && (
+            {!isLoading && pieChartData && (
               <PieChart width={400} height={250}>
                 <Pie
                   dataKey="value"
                   isAnimationActive={true}
                   animationBegin={0}
                   animationDuration={750}
-                  data={data!}
+                  data={pieChartData!}
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
                   fill="#8884d8"
-                  label
+                  label={CustomLabel}
+                  labelLine={false}
                 >
-                  {data.map((_, index) => (
+                  {pieChartData.map((_, index: number) => (
                     <Cell key={`cell-${index}`} fill={PIE_CELL_COLORS[index]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip content={CustomTooltip} />
                 <Legend layout="vertical" verticalAlign="middle" align="left" />
               </PieChart>
             )}
-            {!isLoading && !data && (
+            {!isLoading && !pieChartData && (
               <Text>Something went wrong. Please try again.</Text>
             )}
           </Flex>
