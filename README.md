@@ -22,8 +22,15 @@ The goal was to build a responsive web application where users can:
 Follow the steps below to run the app locally:
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone [https://github.com/Gi0vi04/Tenant-Energy-Mix-Dashboard.git](https://github.com/Gi0vi04/Tenant-Energy-Mix-Dashboard)
+
+# 2. Navigate to the project directory
+cd Tenant-Energy-Mix-Dashboard
+
+# 3. Install dependencies
 npm install
 
-# 2. Start the development server
+# 4. Start the development server
 npm run dev
+
