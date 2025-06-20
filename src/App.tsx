@@ -142,7 +142,11 @@ function App() {
                   ))}
                 </Pie>
                 <Tooltip content={CustomTooltip} />
-                <Legend layout="vertical" verticalAlign="middle" align="left" />
+                <Legend
+                  layout="vertical"
+                  verticalAlign="middle"
+                  align="left"
+                />
               </PieChart>
             )}
             {!isLoading && !pieChartData && (

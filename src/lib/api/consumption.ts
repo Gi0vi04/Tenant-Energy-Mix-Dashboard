@@ -127,6 +127,7 @@ function getYearlyTenantMixConsumption(
     ).length;
   }
 
+  let tenantYearlyGridConsumption = 0; // This value will be incremented, then used to calculate the correct proportions based on the grid share values
   for (let i = 0; i < 12; i++) {
     const tenantConsumptionInMonth = tenantMonthlyConsumption[i];
     const productionInMonth = monthlyProduction[i];
@@ -138,18 +139,17 @@ function getYearlyTenantMixConsumption(
         tenantConsumption.pvEnergy += tenantConsumptionInMonth;
       } else {
         tenantConsumption.pvEnergy += pvShareInMonth;
-        tenantConsumption.gridEnergy = getGridEnergyShares(
-          tenantConsumptionInMonth - pvShareInMonth, // This is the remaining portion that this tenant need from the grid
-          tenantConsumption.gridEnergy
-        );
+        tenantYearlyGridConsumption +=
+          tenantConsumptionInMonth - pvShareInMonth; // This is the remaining portion that this tenant need from the grid
       }
     } else {
-      tenantConsumption.gridEnergy = getGridEnergyShares(
-        tenantConsumptionInMonth, // If the tenant is not a participant, all consumption for this month must be taken from the grid
-        tenantConsumption.gridEnergy
-      );
+      tenantYearlyGridConsumption += tenantConsumptionInMonth;
     }
   }
+
+  tenantConsumption.gridEnergy = getGridEnergyShares(
+    tenantYearlyGridConsumption
+  );
 
   return tenantConsumption;
 }
@@ -160,17 +160,12 @@ function getMonthlyProduction(data: MeterReading[]) {
     .map((element: MeterReading) => element.readingValue);
 }
 
-function getGridEnergyShares(
-  energy: number,
-  currentGridConsumption: GridOrigins
-): GridOrigins {
+function getGridEnergyShares(tenantYearlyGridConsumption: number): GridOrigins {
   return {
-    nuclear:
-      currentGridConsumption.nuclear + energy * GRID_ENERGY_SHARES.nuclear,
-    coal: currentGridConsumption.coal + energy * GRID_ENERGY_SHARES.coal,
-    gas: currentGridConsumption.gas + energy * GRID_ENERGY_SHARES.gas,
-    fossil: currentGridConsumption.fossil + energy * GRID_ENERGY_SHARES.fossil,
-    renewable:
-      currentGridConsumption.renewable + energy * GRID_ENERGY_SHARES.renewable,
+    nuclear: tenantYearlyGridConsumption * GRID_ENERGY_SHARES.nuclear,
+    coal: tenantYearlyGridConsumption * GRID_ENERGY_SHARES.coal,
+    gas: tenantYearlyGridConsumption * GRID_ENERGY_SHARES.gas,
+    fossil: tenantYearlyGridConsumption * GRID_ENERGY_SHARES.fossil,
+    renewable: tenantYearlyGridConsumption * GRID_ENERGY_SHARES.renewable,
   };
 }
