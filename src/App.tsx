@@ -14,6 +14,10 @@ import {
   Text,
   Spinner,
   Divider,
+  Stat,
+  StatLabel,
+  StatNumber,
+  Spacer,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
@@ -23,6 +27,7 @@ import {
 import type { PieChartData, Tenant } from "./types";
 import { PIE_CELL_COLORS, TENANTS } from "./lib/constants";
 import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { roundToTwo } from "./lib/utils";
 
 function App() {
   const menuOptions = [
@@ -32,6 +37,9 @@ function App() {
   const [viewSelected, setViewSelected] = useState("Aggregated");
 
   const [data, setData] = useState<PieChartData[] | null>(null);
+  const [yearlyConsumption, setYearlyConsumption] = useState<number | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchData(option: string) {
@@ -39,9 +47,9 @@ function App() {
 
     setIsLoading(true);
     try {
+      let res: PieChartData[] = [];
       if (option == "Aggregated") {
-        const res: PieChartData[] = await fetchAggregatedConsumption();
-        setData(res);
+        res = await fetchAggregatedConsumption();
       } else {
         const tenant = TENANTS.find(
           (element: Tenant) => element.tenantName == option
@@ -51,9 +59,15 @@ function App() {
           throw new Error("This tenant does not exists.");
         }
 
-        const res = await fetchTenantConsumption(tenant);
-        setData(res);
+        res = await fetchTenantConsumption(tenant);
       }
+
+      const yearlyConsumption = res.reduce(
+        (acc, currentValue: PieChartData) => acc + currentValue.value,
+        0
+      );
+      setYearlyConsumption(Math.round(yearlyConsumption));
+      setData(res);
     } catch (err) {
       console.log(err);
     } finally {
@@ -79,22 +93,31 @@ function App() {
         </CardHeader>
         <Divider />
         <CardBody>
-          <Menu>
-            <MenuButton
-              colorScheme="green"
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-            >
-              {viewSelected}
-            </MenuButton>
-            <MenuList>
-              {menuOptions.map((option: string) => (
-                <MenuItem key={option} onClick={() => fetchData(option)}>
-                  {option}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
+          <Flex justifyContent="space-between" alignItems="center">
+            {!isLoading && yearlyConsumption && (
+              <Stat color="gray.600">
+                <StatLabel>Yearly Consumption</StatLabel>
+                <StatNumber fontSize="lg">{yearlyConsumption} kWh</StatNumber>
+              </Stat>
+            )}
+            <Spacer />
+            <Menu>
+              <MenuButton
+                colorScheme="green"
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+              >
+                {viewSelected}
+              </MenuButton>
+              <MenuList>
+                {menuOptions.map((option: string) => (
+                  <MenuItem key={option} onClick={() => fetchData(option)}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+          </Flex>
           <Flex justifyContent="center" p={4} pb={0}>
             {isLoading && <Spinner size="md" color="green.500" />}
             {!isLoading && data && (
