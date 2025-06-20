@@ -101,7 +101,9 @@ function App() {
               <PieChart width={400} height={250}>
                 <Pie
                   dataKey="value"
-                  isAnimationActive={false}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={750}
                   data={data!}
                   cx="50%"
                   cy="50%"
