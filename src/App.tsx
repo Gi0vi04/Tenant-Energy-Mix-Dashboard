@@ -16,18 +16,20 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { fetchEnergyData } from "./lib/api/energy";
+import {
+  fetchAggregatedConsumption,
+  fetchTenantConsumption,
+} from "./lib/api/consumption";
 import type { PieChartData, Tenant } from "./types";
 import { PIE_CELL_COLORS, TENANTS } from "./lib/constants";
 import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
-import { roundToTwo } from "./lib/utils";
 
 function App() {
   const menuOptions = [
     "Aggregated",
     ...TENANTS.map((element: Tenant) => element.tenantName),
   ]; // For this (small) example I've hardcoded these values
-  const [viewSelected, setViewSelected] = useState("Tenant 02");
+  const [viewSelected, setViewSelected] = useState("Aggregated");
 
   const [data, setData] = useState<PieChartData[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,17 +39,21 @@ function App() {
 
     setIsLoading(true);
     try {
-      const res = await fetchEnergyData(option);
+      if (option == "Aggregated") {
+        const res: PieChartData[] = await fetchAggregatedConsumption();
+        setData(res);
+      } else {
+        const tenant = TENANTS.find(
+          (element: Tenant) => element.tenantName == option
+        );
+        if (!tenant) {
+          alert("Something went wrong. Please try again.");
+          throw new Error("This tenant does not exists.");
+        }
 
-      const pieChartData: PieChartData[] = [
-        { name: "PV Energy", value: roundToTwo(res.pvEnergy) },
-        { name: "Nuclear", value: roundToTwo(res.gridEnergy.nuclear) },
-        { name: "Coal", value: roundToTwo(res.gridEnergy.coal) },
-        { name: "Gas", value: roundToTwo(res.gridEnergy.gas) },
-        { name: "Renewable", value: roundToTwo(res.gridEnergy.renewable) },
-        { name: "Fossil", value: roundToTwo(res.gridEnergy.fossil) },
-      ];
-      setData(pieChartData);
+        const res = await fetchTenantConsumption(tenant);
+        setData(res);
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -56,7 +62,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetchData("Tenant 02");
+    fetchData("Aggregated");
   }, []);
 
   return (

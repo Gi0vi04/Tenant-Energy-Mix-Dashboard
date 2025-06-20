@@ -382,37 +382,5 @@
     "timestamp": "2023-12-15T12:00:00Z",
     "readingValue": 130,
     "unit": "kWh"
-  },
-  {
-    "meterId": "05",
-    "meterType": "Production",
-    "tenant": null,
-    "timestamp": "2023-08-15T12:00:00Z",
-    "readingValue": 380,
-    "unit": "kWh"
-  },
-  {
-    "meterId": "06",
-    "meterType": "Consumption",
-    "tenant": "Tenant 02",
-    "timestamp": "2023-08-15T12:00:00Z",
-    "readingValue": 160,
-    "unit": "kWh"
-  },
-  {
-    "meterId": "01",
-    "meterType": "Consumption",
-    "tenant": "",
-    "timestamp": "2022-08-15T12:00:00Z",
-    "readingValue": 170,
-    "unit": "kWh"
-  },
-  {
-    "meterId": "02",
-    "meterType": "Consumption",
-    "tenant": "Tenant 04",
-    "timestamp": "2023-08-15T12:00:00Z",
-    "readingValue": 200,
-    "unit": "kWh"
   }
 ]
