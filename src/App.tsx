@@ -19,7 +19,8 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { fetchEnergyData } from "./lib/api/energy";
 import type { PieChartData, Tenant } from "./types";
 import { PIE_CELL_COLORS, TENANTS } from "./lib/constants";
-import { Cell, Pie, PieChart } from "recharts";
+import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { roundToTwo } from "./lib/utils";
 
 function App() {
   const menuOptions = [
@@ -39,8 +40,12 @@ function App() {
       const res = await fetchEnergyData(option);
 
       const pieChartData: PieChartData[] = [
-        { name: "PV Energy", value: res.pvEnergy },
-        { name: "Grid Energy", value: res.gridEnergy },
+        { name: "PV Energy", value: roundToTwo(res.pvEnergy) },
+        { name: "Nuclear", value: roundToTwo(res.gridEnergy.nuclear) },
+        { name: "Coal", value: roundToTwo(res.gridEnergy.coal) },
+        { name: "Gas", value: roundToTwo(res.gridEnergy.gas) },
+        { name: "Renewable", value: roundToTwo(res.gridEnergy.renewable) },
+        { name: "Fossil", value: roundToTwo(res.gridEnergy.fossil) },
       ];
       setData(pieChartData);
     } catch (err) {
@@ -87,10 +92,10 @@ function App() {
           <Flex justifyContent="center" p={4} pb={0}>
             {isLoading && <Spinner size="md" color="green.500" />}
             {!isLoading && data && (
-              <PieChart width={400} height={400}>
+              <PieChart width={400} height={250}>
                 <Pie
                   dataKey="value"
-                  isAnimationActive={true}
+                  isAnimationActive={false}
                   data={data!}
                   cx="50%"
                   cy="50%"
@@ -102,6 +107,8 @@ function App() {
                     <Cell key={`cell-${index}`} fill={PIE_CELL_COLORS[index]} />
                   ))}
                 </Pie>
+                <Tooltip />
+                <Legend layout="vertical" verticalAlign="middle" align="left" />
               </PieChart>
             )}
             {!isLoading && !data && (

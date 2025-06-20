@@ -1,4 +1,4 @@
-import type { Tenant } from "../types";
+import type { GridOrigins, Tenant } from "../types";
 
 export const TENANTS: Tenant[] = [
   { tenantName: "Tenant 02", isParticipant: true },
@@ -6,4 +6,19 @@ export const TENANTS: Tenant[] = [
   { tenantName: "Tenant 04", isParticipant: false },
 ]; // In a real context, this data wouldn't be constant but fetched dynamically.
 
-export const PIE_CELL_COLORS = ["#F97316", "#3B82F6"];
+export const GRID_ENERGY_SHARES: GridOrigins = {
+  nuclear: 0.429,
+  coal: 0.406,
+  gas: 0.037,
+  fossil: 0.039,
+  renewable: 0.089,
+};
+
+export const PIE_CELL_COLORS = [
+  "#33C800",
+  "#FF6701",
+  "#969696",
+  "#FFB703",
+  "#993401",
+  "#028100",
+];

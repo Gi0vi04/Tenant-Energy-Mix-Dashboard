@@ -1,6 +1,11 @@
-import type { Consumption, MeterReading, Tenant } from "../../types";
+import type {
+  Consumption,
+  GridOrigins,
+  MeterReading,
+  Tenant,
+} from "../../types";
 import rawData from "../../data/data.json";
-import { TENANTS } from "../constants";
+import { GRID_ENERGY_SHARES, TENANTS } from "../constants";
 
 export async function fetchEnergyData(option: string): Promise<Consumption> {
   return new Promise((resolve) => {
@@ -14,11 +19,13 @@ export async function fetchEnergyData(option: string): Promise<Consumption> {
       );
       if (!tenant) {
         alert("Something went wrong. Please try again.");
-        throw new Error("This tenant does not exists.")
+        throw new Error("This tenant does not exists.");
       }
-      console.log(tenant);
 
-      const tenantMonthlyConsumption = getTenantMonthlyConsumption(tenant, data);
+      const tenantMonthlyConsumption = getTenantMonthlyConsumption(
+        tenant,
+        data
+      );
       const tenantMixConsumption = getYearlyTenantMixConsumption(
         tenant,
         tenantMonthlyConsumption,
@@ -36,10 +43,10 @@ function getMonthlyProduction(data: MeterReading[]) {
     .map((element: MeterReading) => element.readingValue);
 }
 
-function getTenantMonthlyConsumption(tenant:Tenant, data: MeterReading[]){
-  return data.filter(
-        (element: MeterReading) => element.tenant == tenant?.tenantName
-      ).map((element: MeterReading) => element.readingValue);
+function getTenantMonthlyConsumption(tenant: Tenant, data: MeterReading[]) {
+  return data
+    .filter((element: MeterReading) => element.tenant == tenant?.tenantName)
+    .map((element: MeterReading) => element.readingValue);
 }
 
 function getYearlyTenantMixConsumption(
@@ -47,7 +54,10 @@ function getYearlyTenantMixConsumption(
   tenantMonthlyConsumption: number[],
   monthlyProduction: number[]
 ): Consumption {
-  let tenantConsumption: Consumption = { pvEnergy: 0, gridEnergy: 0 };
+  let tenantConsumption: Consumption = {
+    pvEnergy: 0,
+    gridEnergy: getGridEnergyShares(0),
+  };
 
   // If the tenant is not a participant I won't calculate the participantNumber cause I don't need it
   let participantsNumber = 1;
@@ -64,16 +74,30 @@ function getYearlyTenantMixConsumption(
     if (tenant?.isParticipant) {
       const pvShareInMonth = productionInMonth / participantsNumber;
 
-      if(tenantConsumptionInMonth <= pvShareInMonth) tenantConsumption.pvEnergy += tenantConsumptionInMonth;
-      else{
+      if (tenantConsumptionInMonth <= pvShareInMonth)
+        tenantConsumption.pvEnergy += tenantConsumptionInMonth;
+      else {
         tenantConsumption.pvEnergy += pvShareInMonth;
-        tenantConsumption.gridEnergy += tenantConsumptionInMonth - pvShareInMonth;
+        tenantConsumption.gridEnergy = getGridEnergyShares(
+          tenantConsumptionInMonth - pvShareInMonth
+        );
       }
-    }
-    else{
-      tenantConsumption.gridEnergy += tenantConsumptionInMonth;
+    } else {
+      tenantConsumption.gridEnergy = getGridEnergyShares(
+        tenantConsumptionInMonth
+      );
     }
   }
 
   return tenantConsumption;
+}
+
+function getGridEnergyShares(energy: number): GridOrigins {
+  return {
+    nuclear: energy * GRID_ENERGY_SHARES.nuclear,
+    coal: energy * GRID_ENERGY_SHARES.coal,
+    gas: energy * GRID_ENERGY_SHARES.gas,
+    fossil: energy * GRID_ENERGY_SHARES.fossil,
+    renewable: energy * GRID_ENERGY_SHARES.renewable,
+  };
 }
